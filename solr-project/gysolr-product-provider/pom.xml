@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.glorypty</groupId>
+    <artifactId>gysolr-product</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>gysolr-product-provider</artifactId>
+  <packaging>war</packaging>
+  
+  <properties>
+		<!-- hosted -->
+		<version.gysolr-product-im>0.016.0400</version.gysolr-product-im>
+		<version.gymodule-product-im>0.016.0400</version.gymodule-product-im>
+ </properties>
+ 
+ <dependencies>
+		<!-- hosted -->
+		<dependency>
+			<groupId>com.glorypty</groupId>
+			<artifactId>gysolr-product-im</artifactId>
+			<version>${version.gysolr-product-im}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.glorypty</groupId>
+			<artifactId>gymodule-product-im</artifactId>
+			<version>${version.gymodule-product-im}</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${build.maven-deploy-plugin}</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<id>DEV</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<propertie.log4j>DEBUG</propertie.log4j>
+				<propertie.database>database</propertie.database>
+				<propertie.system.zookeeper>192.168.2.198:2181,192.168.2.198:2182,192.168.2.198:2183</propertie.system.zookeeper>
+			</properties>
+		</profile>
+		<profile>
+			<id>QC</id>
+			<properties>
+				<propertie.log4j>INFO</propertie.log4j>
+				<propertie.database>QC_database</propertie.database>
+				<propertie.system.zookeeper>192.168.2.193:2181</propertie.system.zookeeper>
+			</properties>
+		</profile>
+		<profile>
+			<id>YFB</id>
+			<properties>
+				<propertie.log4j>INFO</propertie.log4j>
+				<propertie.database>YFB_database</propertie.database>
+				<propertie.system.zookeeper>192.168.3.18:2181</propertie.system.zookeeper>
+			</properties>
+		</profile>
+		<profile>
+			<id>SC</id>
+			<properties>
+				<propertie.log4j>ERROR</propertie.log4j>
+				<propertie.database>SC_database</propertie.database>
+				<propertie.system.zookeeper>192.168.3.23:2181</propertie.system.zookeeper>				
+			</properties>
+		</profile>
+	</profiles>
+	
+</project>

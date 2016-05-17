@@ -1,0 +1,137 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.glorypty</groupId>
+  <artifactId>gysolr-product</artifactId>
+  <version>0.0.1</version>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>gysolr-product-im</module>
+  	<module>gysolr-product-provider</module>
+  </modules>
+
+  
+  
+  <properties>	  				
+ 		<!-- hosted -->
+		<version.glorypty-framework-webcore>0.1.016.0419</version.glorypty-framework-webcore>
+		<!-- soa -->
+  		<version.soa.zookeeper>3.4.6</version.soa.zookeeper>	
+  		<version.soa.zkclient>0.1</version.soa.zkclient>	
+  		<version.soa.dubbo>2.5.3</version.soa.dubbo>	
+		<!-- build -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<build.jdk>1.7</build.jdk>
+		<build.maven-compiler-plugin>2.5.1</build.maven-compiler-plugin>
+		<build.maven-resources-plugin>2.6</build.maven-resources-plugin>
+		<build.maven-surefire>2.10</build.maven-surefire>
+		<build.maven-deploy-plugin>2.8.2</build.maven-deploy-plugin>
+		<build.maven-tomcat>1.1</build.maven-tomcat>
+		<build.maven-jetty>7.1.6.v20100715</build.maven-jetty>
+	</properties>
+	<repositories>
+	</repositories>
+	
+	<dependencies>
+		<!-- hosted -->
+		<dependency>
+			<groupId>com.glorypty</groupId>
+			<artifactId>glorypty-framework-webcore</artifactId>
+			<version>${version.glorypty-framework-webcore}</version>
+			<classifier>classes</classifier>
+		</dependency>
+		<!-- soa -->
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>${version.soa.zookeeper}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>${version.soa.zkclient}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>${version.soa.dubbo}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.jboss.netty</groupId>
+					<artifactId>netty</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<plugins>
+			<!-- 编译环境 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${build.maven-compiler-plugin}</version>
+				<configuration>
+					<source>${build.jdk}</source>
+					<target>${build.jdk}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${build.maven-resources-plugin}</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${build.maven-surefire}</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<excludes>
+						<exclude>**/*Test.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<!-- 运行容器 -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${build.maven-jetty}</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webAppConfig>
+						<contextPath>/</contextPath>
+						<defaultsDescriptor>readme/build/webdefault.xml</defaultsDescriptor>
+					</webAppConfig>
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>80</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
+				</configuration>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+	<distributionManagement>
+		<repository>
+			<id>nexus-deployment</id>
+			<name>Nexus Release Repository</name>
+			<url>http://192.168.2.196:8080/nexus/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
+</project>

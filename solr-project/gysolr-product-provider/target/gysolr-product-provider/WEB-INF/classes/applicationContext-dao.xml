@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 	
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd ">
+
+	<bean id="dataSourceGYMProduct" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="url" value="${datasource.gycore.url}" />
+		<property name="username" value="${datasource.gycore.username}" />
+		<property name="password" value="${datasource.gycore.password}" />
+		<property name="initialSize" value="${druid.initialSize}" />
+		<property name="minIdle" value="${druid.minIdle}" />
+		<property name="maxActive" value="${druid.maxActive}" />
+		<property name="maxWait" value="${druid.maxWait}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />
+		<property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />
+		<property name="validationQuery" value="${druid.validationQuery}" />
+		<property name="testOnBorrow" value="${druid.testOnBorrow}" />
+		<property name="testOnReturn" value="${druid.testOnReturn}" />
+		<property name="testWhileIdle" value="${druid.testWhileIdle}" />
+		<property name="maxOpenPreparedStatements" value="${druid.maxOpenPreparedStatements}" />
+	</bean>
+
+	<!-- Session工厂 beign -->
+	<bean id="sessionFactoryGYMProduct" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceGYMProduct" />
+		<property name="typeAliasesPackage" value="com.glorypty.gymodule.product.bussiness.**.domain" />
+		<property name="configurationProperties">
+			<props>
+				<prop key="lazyLoadingEnabled">true</prop>
+				<prop key="aggressiveLazyLoading">true</prop>
+			</props>
+		</property>		
+		<property name="plugins">
+            <list>
+                 <bean class="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
+                     <property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.OracleDialect"/>
+					 <property name="asyncTotalCount" value="false"/>
+                 </bean>
+            </list>
+        </property>
+	</bean>
+
+	<!--MyBait配置加载 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">	
+		<property name="basePackage" value="com.glorypty.gymodule.product.bussiness.**.mapper" />	
+		<property name="sqlSessionFactoryBeanName" value="sessionFactoryGYMProduct"/>		
+	</bean>
+	
+	<!-- 事务处理 -->
+	<bean id="transactionManagerGYMProduct" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceGYMProduct" />
+	</bean>
+    <tx:advice id="transactionAdviceGYMProduct" transaction-manager="transactionManagerGYMProduct">
+        <tx:attributes>
+        	<tx:method name="insert*" propagation="REQUIRED" />
+        	<tx:method name="add*" propagation="REQUIRED" />        	
+        	<tx:method name="update*" propagation="REQUIRED" />
+        	<tx:method name="delete*" propagation="REQUIRED" />
+        	<tx:method name="execute*" propagation="REQUIRED" />
+        	<tx:method name="batch*" propagation="REQUIRED" />        	            
+            <tx:method name="get*" propagation="SUPPORTS" />
+            <tx:method name="count*" propagation="SUPPORTS" />
+            <tx:method name="search*" propagation="SUPPORTS" />
+            <tx:method name="*" propagation="SUPPORTS" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:advisor advice-ref="transactionAdviceGYMProduct" pointcut="execution(* com.glorypty.gymodule.product.bussiness.**.service.impl.*Service.*(..))"/>
+    </aop:config>
+
+</beans>
