@@ -7,4 +7,95 @@
   </parent>
   <artifactId>gysolr-product-provider</artifactId>
   <packaging>war</packaging>
+  
+  <properties>
+		<!-- hosted -->
+		<version.gysolr-product-im>0.016.0400</version.gysolr-product-im>
+		<version.gymodule-product-im>0.016.0400</version.gymodule-product-im>
+		<version.gymodule-centre-im>0.016.0400</version.gymodule-centre-im>
+ </properties>
+ 
+ <dependencies>
+		<!-- hosted -->
+		<dependency>
+			<groupId>com.glorypty</groupId>
+			<artifactId>gysolr-product-im</artifactId>
+			<version>${version.gysolr-product-im}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.glorypty</groupId>
+			<artifactId>gymodule-product-im</artifactId>
+			<version>${version.gymodule-product-im}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.glorypty</groupId>
+			<artifactId>gymodule-centre-im</artifactId>
+			<version>${version.gymodule-centre-im}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.1.3.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		
+	</dependencies>
+	
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${build.maven-deploy-plugin}</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<id>DEV</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<propertie.log4j>DEBUG</propertie.log4j>
+				<propertie.database>database</propertie.database>
+				<propertie.system.zookeeper>192.168.2.198:2181,192.168.2.198:2182,192.168.2.198:2183</propertie.system.zookeeper>
+			</properties>
+		</profile>
+		<profile>
+			<id>QC</id>
+			<properties>
+				<propertie.log4j>INFO</propertie.log4j>
+				<propertie.database>QC_database</propertie.database>
+				<propertie.system.zookeeper>192.168.2.193:2181</propertie.system.zookeeper>
+			</properties>
+		</profile>
+		<profile>
+			<id>YFB</id>
+			<properties>
+				<propertie.log4j>INFO</propertie.log4j>
+				<propertie.database>YFB_database</propertie.database>
+				<propertie.system.zookeeper>192.168.3.18:2181</propertie.system.zookeeper>
+			</properties>
+		</profile>
+		<profile>
+			<id>SC</id>
+			<properties>
+				<propertie.log4j>ERROR</propertie.log4j>
+				<propertie.database>SC_database</propertie.database>
+				<propertie.system.zookeeper>192.168.3.23:2181</propertie.system.zookeeper>				
+			</properties>
+		</profile>
+	</profiles>
+	
 </project>

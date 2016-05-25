@@ -6,4 +6,15 @@
     <version>0.0.1</version>
   </parent>
   <artifactId>gysolr-product-im</artifactId>
+  <version>0.016.0400</version>
+  
+  <dependencies>
+     <dependency>
+	    <groupId>org.apache.solr</groupId>
+	    <artifactId>solr-solrj</artifactId>
+	    <version>5.2.0</version>
+	</dependency>
+  </dependencies>
+  
+
 </project>

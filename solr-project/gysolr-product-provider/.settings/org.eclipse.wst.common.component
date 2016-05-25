@@ -10,6 +10,12 @@
         <dependent-module archiveName="gymodule-product-im-0.016.0400.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gymodule-product-im/gymodule-product-im">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="gymodule-centre-im-0.016.0400.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gymodule-centre-im/gymodule-centre-im">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="glorypty-framework-core-0.1.016.0504.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/glorypty-framework-core/glorypty-framework-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="gysolr-product-provider"/>
         <property name="java-output-path" value="/gysolr-product-provider/target/classes"/>
     </wb-module>

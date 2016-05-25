@@ -6,11 +6,16 @@
     					http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">  
    
     <!-- 提供方应用信息，用于计算依赖关系 -->  
-    <dubbo:application name="GYModule.Provider20882.solr"/>   
+    <dubbo:application name="GYModule.Provider20886.solr"/>   
     <dubbo:registry protocol="zookeeper" address="${dubbo.registry.zookeeper}" />
-    <dubbo:protocol name="dubbo" port="20882" />
+    <dubbo:protocol name="dubbo" port="20886" />
     
-    <dubbo:reference check="false" id="normalService" interface="com.glorypty.gymodule.product.bussiness.prd.service.GoodsIService" version="lj" timeout="300000"/>
-    <!-- <dubbo:service ref="goodsTreeService" interface="com.glorypty.gymodule.product.bussiness.prd.service.GoodsTreeIService" version="asas"/> -->
+    <!-- 消费 -->
+    <dubbo:reference check="false" id="goodsService"  interface="com.glorypty.gymodule.product.bussiness.prd.service.GoodsIService" timeout="300000" version="lj"/>
+    <dubbo:reference check="false" id="treeNodeCentreService" interface="com.glorypty.gymodule.centre.bussiness.sys.service.TreeNodeCentreIService" timeout="300000"/>
+    <dubbo:reference check="false" id="solrQueueService" interface="com.glorypty.gymodule.centre.bussiness.sys.service.SolrQueueIService" version="lj" timeout="300000"/>
+    
+    <!-- 服务 -->
+    <dubbo:service ref="makeSerialImpl" interface="com.glorypty.gysolr.sys.MakeSerialFacade" version="lj"/>
    
 </beans>  

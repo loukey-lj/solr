@@ -13,7 +13,9 @@
   
   <properties>	  				
  		<!-- hosted -->
-		<version.glorypty-framework-webcore>0.1.016.0419</version.glorypty-framework-webcore>
+		<version.glorypty-framework-webcore>0.016.0518</version.glorypty-framework-webcore>
+		
+		
 		<!-- soa -->
   		<version.soa.zookeeper>3.4.6</version.soa.zookeeper>	
   		<version.soa.zkclient>0.1</version.soa.zkclient>	
@@ -39,6 +41,8 @@
 			<version>${version.glorypty-framework-webcore}</version>
 			<classifier>classes</classifier>
 		</dependency>
+		
+		
 		<!-- soa -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
