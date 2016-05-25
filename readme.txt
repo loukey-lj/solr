@@ -17,7 +17,7 @@
   -- 在遇到dubbo负载均衡的情况下，会将gysolr-product-provider部署多份，gysolr-product-provider一启动
      一般会全量更新或重建索引，这样可能会出现重复重建的弊端，所以需要一个机制来控制这种弊端的发生
 	 我是采用的文件锁，如果更加好的方式，不妨给我邮件
-
+5.采用spring定时器进行增量索引的更新
 author：liujie
 email: 854194341@qq.com
   
