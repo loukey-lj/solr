@@ -85,7 +85,7 @@
 			<properties>
 				<propertie.log4j>INFO</propertie.log4j>
 				<propertie.database>YFB_database</propertie.database>
-				<propertie.system.zookeeper>192.168.3.18:2181</propertie.system.zookeeper>
+				<propertie.system.zookeeper>xzxz</propertie.system.zookeeper>
 			</properties>
 		</profile>
 		<profile>
@@ -93,7 +93,7 @@
 			<properties>
 				<propertie.log4j>ERROR</propertie.log4j>
 				<propertie.database>SC_database</propertie.database>
-				<propertie.system.zookeeper>192.168.3.23:2181</propertie.system.zookeeper>				
+				<propertie.system.zookeeper>fxf</propertie.system.zookeeper>				
 			</properties>
 		</profile>
 	</profiles>
